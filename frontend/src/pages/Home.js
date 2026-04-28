@@ -1,6 +1,29 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Camera, Target, BarChart2, Smartphone, Check } from "lucide-react";
+
+// Standalone ad unit for the public landing page (no auth required)
+const PUBLISHER_ID = "ca-pub-XXXXXXXXXXXXXXXX";
+function LandingAd({ slot, className = "" }) {
+  const pushed = useRef(false);
+  useEffect(() => {
+    if (pushed.current) return;
+    try { (window.adsbygoogle = window.adsbygoogle || []).push({}); pushed.current = true; } catch {}
+  }, []);
+  return (
+    <div className={`w-full text-center ${className}`}>
+      <p className="text-[10px] text-gray-400 uppercase tracking-widest mb-1">Advertisement</p>
+      <ins
+        className="adsbygoogle"
+        style={{ display: "block" }}
+        data-ad-client={PUBLISHER_ID}
+        data-ad-slot={slot}
+        data-ad-format="auto"
+        data-full-width-responsive="true"
+      />
+    </div>
+  );
+}
 
 const FEATURES = [
   { icon: <Camera size={28} />, title: "AI Food Scanning", desc: "Photograph any meal and get instant macro breakdown with GPT-4o vision." },
@@ -46,6 +69,11 @@ export default function Home() {
         <p className="mt-4 text-sm text-gray-400">No credit card required · Free forever tier</p>
       </section>
 
+      {/* Ad below hero — high-visibility placement */}
+      <div className="max-w-3xl mx-auto px-6 py-4">
+        <LandingAd slot="1234567890" />
+      </div>
+
       <section className="py-16 px-6 max-w-5xl mx-auto">
         <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">Everything you need</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
@@ -62,6 +90,11 @@ export default function Home() {
           ))}
         </div>
       </section>
+
+      {/* Ad between features and CTA */}
+      <div className="max-w-3xl mx-auto px-6 pb-4">
+        <LandingAd slot="0987654321" />
+      </div>
 
       <section className="py-16 px-6 bg-gradient-to-r from-green-500 to-emerald-600 text-white text-center">
         <h2 className="text-3xl font-bold mb-4">Start tracking smarter today</h2>

@@ -7,6 +7,7 @@ import { API } from "../../context/AuthContext";
 import GoalTracker from "../Goals/GoalTracker";
 import FoodTracker from "../Goals/FoodTracker";
 import FoodUpload from "./FoodUpload";
+import AdBanner from "../AdBanner";
 
 export default function Dashboard() {
   const { selectedDate, setSelectedDate, loadDay, progress } = useFood();
@@ -107,6 +108,10 @@ export default function Dashboard() {
       </div>
 
       <GoalTracker />
+
+      {/* In-feed ad between goal summary and food log — free users only */}
+      <AdBanner slot="rectangle" />
+
       <FoodTracker />
 
       {isToday && (
